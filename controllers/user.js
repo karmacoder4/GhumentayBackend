@@ -34,6 +34,8 @@ const signIn = async (req, res) => {
 
     //response
     res.status(200).json({
+      status: "success",
+      message: "Helllo user!!! Welcome Back!!!",
       user: existingUser,
       token,
     });
@@ -45,6 +47,17 @@ const signIn = async (req, res) => {
 
 const signUp = async (req, res) => {
   const { firstName, lastName, email, password, confirmPassword } = req.body;
+
+  if (!firstName && !lastName)
+    return res
+      .status(400)
+      .json({ message: "firstName and lastName is required" });
+  if (!password)
+    return res.status(400).json({ message: "Password must be provided" });
+  if (password.length < 6)
+    return res
+      .status(400)
+      .json({ message: "Password must be atleast 6 character long" });
 
   try {
     const existingUser = await UserModel.findOne({ email });
@@ -58,9 +71,9 @@ const signUp = async (req, res) => {
     const hashedPassword = await bcrypt.hash(password, 10);
 
     const newUser = await UserModel.create({
+      name: `${firstName} ${lastName}`,
       email,
       password: hashedPassword,
-      name: `${firstName} ${lastName}`,
     });
 
     const token = jwt.sign(
@@ -75,22 +88,27 @@ const signUp = async (req, res) => {
     });
 
     //response
-    res.json({ newUser, token });
+    res.json({
+      status: "success",
+      message: "User created successfully!!!",
+      newUser,
+      token,
+    });
   } catch (error) {
-    res.status(500).json({ message: "Something went wrong !!!" });
+    res
+      .status(500)
+      .json({ message: "Something went wrong !!!", error: `${error.message}` });
     console.log(error.message);
   }
 };
 
 const signOut = async (req, res) => {
-
   res.cookie("token", "", {
     httpOnly: true,
     maxAge: 0,
   });
 
-  res.status(200).json({ message: "Sign-out successful" });
+  res.status(200).json({ status: "success", message: "Sign-out successful" });
 };
-
 
 module.exports = { signUp, signIn, signOut };

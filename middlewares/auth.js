@@ -1,19 +1,20 @@
 const jwt = require("jsonwebtoken");
 require("dotenv/config");
+const UserModel = require("../models/User.js")
 
-const auth = (req, res, next) => {
+const auth = async (req, res, next) => {
   try {
     const { token } = req.cookies;
 
     if (!token) {
       return res
         .status(401)
-        .json({ message: "Authentication failed: Missing token" });
+        .json({ status:"failed" ,message: "Authentication failed: Missing token" });
     }
 
     const decodedToken = jwt.verify(token, process.env.JWT_SECRET_KEY);
 
-    req.user = decodedToken;
+    req.user = await UserModel.findById(decodedToken.id);
 
     next();
   } catch (error) {

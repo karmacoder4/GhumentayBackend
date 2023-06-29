@@ -16,7 +16,7 @@ const app=express();
 app.use(express.json());
 app.use(express.urlencoded({ extended: false }));
 app.use(cookieParser());
-app.use(userRouter);
+
 
 // permission for the user to use api in mobile devices
 app.use(cors());
@@ -30,6 +30,7 @@ config.connectDataBase();
 
 app.use("/api/v1/auth", authRouter);
 app.use("/api/v1/destination", destinationRouter);
+app.use("/user", userRouter);
 // Used to upload images 
 
 app.use("/api/v1/upload", uploadRouter, (req, res) => {

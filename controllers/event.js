@@ -28,10 +28,9 @@ const deleteEvent = async (req, res) => {
   const { id: eventId } = req.params;
   const event = await Event.findOneAndRemove({ _id: eventId });
   if (!event) {
-    console.log("No event")
     throw new NotFoundError(`No event found with id ${eventId}`);
   }
-  res.status(200).send("Destination deleted");
+  res.status(200).send("Event deleted");
 };
 
 module.exports = {

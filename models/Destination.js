@@ -12,7 +12,7 @@ const destinationSchema = new mongoose.Schema({
     maxLength: 50,
   },
   photo: {
-    type:String,
+    type: String,
   },
   bestVisitingTime: {
     type: String,
@@ -38,20 +38,29 @@ const destinationSchema = new mongoose.Schema({
       },
     },
   ],
-  store: [{
-    item:{
-      type:String,
+  store: [
+    {
+      item: {
+        type: String,
+      },
+      price: {
+        type: String,
+      },
+      description: {
+        type: String,
+      },
+      tryIt: {
+        type: String,
+      },
     },
-    price:{
-      type:String,
-    },
-    description:{
-      type:String,
-    },
-    tryIt:{
-      type:String
-    }
-  }],
+  ],
+  cuisine: {
+    type: Array,
+    required: true,
+  },
+  historical_facts: {
+    type: String,
+  },
 });
 
 module.exports = mongoose.model("Destination", destinationSchema);

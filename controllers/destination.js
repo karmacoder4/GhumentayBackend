@@ -1,4 +1,5 @@
 const Destination = require('../models/Destination');
+const { BadRequestError, NotFoundError } = require('../errors');
 
 const getAllDestinations = async(req,res) => {
     const destinations = await Destination.find({});
@@ -11,6 +12,7 @@ const getSingleDestinations = async(req,res) => {
     const destination = await Destination.find({_id: Destinationid})
     
     if(!destination){
+        
         res.send(`No destination with such id ${Destinationid}`)
     }
 

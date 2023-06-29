@@ -11,6 +11,9 @@ const destinationSchema = new mongoose.Schema({
     required: [true, "Enter location"],
     maxLength: 50,
   },
+  photo: {
+    type:String,
+  },
   bestVisitingTime: {
     type: String,
     required: [true, "Enter best visiting time"],
@@ -35,9 +38,20 @@ const destinationSchema = new mongoose.Schema({
       },
     },
   ],
-  store: {
-    type: String,
-  },
+  store: [{
+    item:{
+      type:String,
+    },
+    price:{
+      type:String,
+    },
+    description:{
+      type:String,
+    },
+    tryIt:{
+      type:String
+    }
+  }],
 });
 
 module.exports = mongoose.model("Destination", destinationSchema);

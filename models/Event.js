@@ -7,11 +7,11 @@ const eventSchema = new mongoose.Schema({
     },
     description:{
         type:String,
-        maxLength:100,
+        maxLength:300,
         minLength:30
     },
     photo:{
-        type:URL,
+        type:String,
     }
 })
 
